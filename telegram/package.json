@@ -1,0 +1,16 @@
+{
+  "name": "telegram-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "telegram.js",
+  "scripts": {
+    "test": "node ."
+  },
+  "author": "Errorist",
+  "license": "ISC",
+  "dependencies": {
+    "node-cron": "^3.0.1",
+    "node-fetch": "^3.2.9",
+    "node-telegram-bot-api": "^0.58.0"
+  }
+}
