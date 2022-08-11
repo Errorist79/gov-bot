@@ -159,6 +159,44 @@
         "is_expedited": true
       },
       {
+        "proposal_id": "161",
+        "content": {
+          "@type": "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal",
+          "title": "Version 0.6.5 Upgrade",
+          "description": "For a full description see: https://github.com/KYVENetwork/chain/releases/tag/v0.6.5",
+          "plan": {
+            "name": "v0.6.4",
+            "time": "0001-01-01T00:00:00Z",
+            "height": "1751913",
+            "info": "{\"binaries\": {\"linux/amd64\": \"https://github.com/KYVENetwork/chain/releases/download/v0.6.5/chain_linux_amd64.tar.gz?checksum=sha256:13cf27170532d875f17c8ad30c457eb6877454746b2f0878502b18a64d1fd866\", \"darwin/amd64\": \"https://github.com/KYVENetwork/chain/releases/download/v0.6.4/chain_darwin_amd64.tar.gz?checksum=sha256:ce79d0a417daf1ca3dc88d107b077fbf67c81efe1e87f958555a4df6ac8018db\"}}",
+            "upgraded_client_state": null
+          }
+        },
+        "status": "PROPOSAL_STATUS_ACTIVE",
+        "final_tally_result": {
+          "yes": "120345387665416176",
+          "abstain": "168823755301555",
+          "no": "4612079958291",
+          "no_with_veto": "1212765477586"
+        },
+        "submit_time": "2022-08-05T12:22:05.828908821Z",
+        "deposit_end_time": "2022-08-05T12:27:05.828908821Z",
+        "total_deposit": [
+          {
+            "denom": "tkyve",
+            "amount": "100000000000000"
+          }
+        ],
+        "voting_start_time": "2022-09-04T12:22:05.828908821Z",
+        "voting_end_time": "2022-09-04T12:52:05.828908821Z",
+        "is_expedited": true
+      }
+    ],
+    "pagination": {
+      "next_key": null,
+      "total": "0"
+    },
+          {
         "proposal_id": "160",
         "content": {
           "@type": "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal",
