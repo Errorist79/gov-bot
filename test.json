@@ -1,99 +1,199 @@
-    {
-      "proposal_id": "158",
-      "content": {
-        "@type": "/kyve.registry.v1beta1.UnpausePoolProposal",
-        "title": "Unpause Stacks Pool",
-        "description": "With the latest @kyve/stacks runtime upgrade, we can now unpause this pool.",
-        "id": "2"
-      },
-      "status": "PROPOSAL_STATUS_PASSED",
-      "final_tally_result": {
-        "yes": "118003541262142921",
-        "abstain": "11699247079522",
-        "no": "93451693457148",
-        "no_with_veto": "0"
-      },
-      "submit_time": "2022-07-29T12:04:50.272299282Z",
-      "deposit_end_time": "2022-07-29T12:09:50.272299282Z",
-      "total_deposit": [
-        {
-          "denom": "tkyve",
-          "amount": "100000000000000"
-        }
-      ],
-      "voting_start_time": "2022-07-29T12:04:50.272299282Z",
-      "voting_end_time": "2022-07-29T12:34:50.272299282Z",
-      "is_expedited": true
-    },
-    {
-      "proposal_id": "159",
-      "content": {
-        "@type": "/cosmos.params.v1beta1.ParameterChangeProposal",
-        "title": "Increase Undelegation Unbonding Time",
-        "description": "Increase undelegation time to 21 days.",
-        "changes": [
+{
+    "proposals": [
+      {
+        "proposal_id": "155",
+        "content": {
+          "@type": "/kyve.registry.v1beta1.SchedulePoolUpgradeProposal",
+          "title": "Upgrade Solana Runtime",
+          "description": "Upgrade @kyve/solana to v0.3.6",
+          "runtime": "@kyve/solana",
+          "version": "0.3.6",
+          "scheduled_at": "1659088800",
+          "duration": "300",
+          "binaries": "{\"linux\":\"https://github.com/kyve-org/solana/releases/download/v0.3.6/kyve-linux.zip?checksum=6de2188052aaef9f50b42d0e509b722a0a8c0c9fbe327d7b3dd80c4566f4d0db\",\"macos\":\"https://github.com/kyve-org/solana/releases/download/v0.3.6/kyve-macos.zip?checksum=cce983aaff19c33902e1087a9460d5e48a12a590914cf5729c311558bf8e6e34\"}"
+        },
+        "status": "PROPOSAL_STATUS_PASSED",
+        "final_tally_result": {
+          "yes": "116928865330081133",
+          "abstain": "184642404072718",
+          "no": "120957955745735",
+          "no_with_veto": "0"
+        },
+        "submit_time": "2022-07-29T09:40:04.694846797Z",
+        "deposit_end_time": "2022-07-29T09:45:04.694846797Z",
+        "total_deposit": [
           {
-            "subspace": "registry",
-            "key": "UnbondingDelegationTime",
-            "value": "\"1814400\""
+            "denom": "tkyve",
+            "amount": "100000000000000"
           }
-        ]
+        ],
+        "voting_start_time": "2022-07-29T09:40:04.694846797Z",
+        "voting_end_time": "2022-07-29T10:10:04.694846797Z",
+        "is_expedited": true
       },
-      "status": "PROPOSAL_STATUS_PASSED",
-      "final_tally_result": {
-        "yes": "120304385926709381",
-        "abstain": "52628450705807",
-        "no": "671087326228829",
-        "no_with_veto": "78016369679223"
+      {
+        "proposal_id": "156",
+        "content": {
+          "@type": "/kyve.registry.v1beta1.UpdatePoolProposal",
+          "title": "Change Polkadot Parameters",
+          "description": "To improve pool stability, we're decreasing the max bundle size to 100.",
+          "id": "17",
+          "name": "Polkadot",
+          "runtime": "@kyve/substrate",
+          "logo": "4kgpckyXwlFOUjY4CSAL7OSg93BGujUIRfOOsPTaNyE",
+          "versions": "",
+          "config": "{\"rpc\":\"https://proxy.kyve.network/polkadot\",\"github\":\"https://github.com/kyve-org/substrate\"}",
+          "upload_interval": "120",
+          "operating_cost": "2500000000",
+          "max_bundle_size": "100",
+          "min_stake": "10000000000000"
+        },
+        "status": "PROPOSAL_STATUS_PASSED",
+        "final_tally_result": {
+          "yes": "117471690119720738",
+          "abstain": "313880506313910",
+          "no": "10043944617254",
+          "no_with_veto": "3434157871241"
+        },
+        "submit_time": "2022-07-29T10:07:50.872399028Z",
+        "deposit_end_time": "2022-07-29T10:12:50.872399028Z",
+        "total_deposit": [
+          {
+            "denom": "tkyve",
+            "amount": "100000000000000"
+          }
+        ],
+        "voting_start_time": "2022-07-29T10:07:50.872399028Z",
+        "voting_end_time": "2022-07-29T10:37:50.872399028Z",
+        "is_expedited": true
       },
-      "submit_time": "2022-08-02T14:02:46.126818968Z",
-      "deposit_end_time": "2022-08-02T14:07:46.126818968Z",
-      "total_deposit": [
-        {
-          "denom": "tkyve",
-          "amount": "100000000000000"
-        }
-      ],
-      "voting_start_time": "2022-08-02T14:02:46.126818968Z",
-      "voting_end_time": "2022-08-02T14:32:46.126818968Z",
-      "is_expedited": true
-    },
-    {
-      "proposal_id": "161",
-      "content": {
-        "@type": "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal",
-        "title": "Version 0.6.4 Upgrade",
-        "description": "For a full description see: https://github.com/KYVENetwork/chain/releases/tag/v0.6.4",
-        "plan": {
-          "name": "v0.6.4",
-          "time": "0001-01-01T00:00:00Z",
-          "height": "1751913",
-          "info": "{\"binaries\": {\"linux/amd64\": \"https://github.com/KYVENetwork/chain/releases/download/v0.6.4/chain_linux_amd64.tar.gz?checksum=sha256:13cf27170532d875f17c8ad30c457eb6877454746b2f0878502b18a64d1fd866\", \"darwin/amd64\": \"https://github.com/KYVENetwork/chain/releases/download/v0.6.4/chain_darwin_amd64.tar.gz?checksum=sha256:ce79d0a417daf1ca3dc88d107b077fbf67c81efe1e87f958555a4df6ac8018db\"}}",
-          "upgraded_client_state": null
-        }
+      {
+        "proposal_id": "157",
+        "content": {
+          "@type": "/kyve.registry.v1beta1.SchedulePoolUpgradeProposal",
+          "title": "Upgrade Stacks Runtime",
+          "description": "Upgrade @kyve/stacks to v0.3.6",
+          "runtime": "@kyve/stacks",
+          "version": "0.3.6",
+          "scheduled_at": "1659088800",
+          "duration": "300",
+          "binaries": "{\"linux\":\"https://github.com/kyve-org/stacks/releases/download/v0.3.6/kyve-linux.zip?checksum=8075acdd9b1a99068e2a9c25a765801e60aa93cf94d2626e6af352a57037fdae\",\"macos\":\"https://github.com/kyve-org/stacks/releases/download/v0.3.6/kyve-macos.zip?checksum=21f268cacf0393b86f2dc9531e2e78c68372c40b5c4cd4e416f9ac7c34b350be\"}"
+        },
+        "status": "PROPOSAL_STATUS_PASSED",
+        "final_tally_result": {
+          "yes": "117215755079454206",
+          "abstain": "9634809093833",
+          "no": "6596608713923",
+          "no_with_veto": "234000000000"
+        },
+        "submit_time": "2022-07-29T10:44:54.812252508Z",
+        "deposit_end_time": "2022-07-29T10:49:54.812252508Z",
+        "total_deposit": [
+          {
+            "denom": "tkyve",
+            "amount": "100000000000000"
+          }
+        ],
+        "voting_start_time": "2022-07-29T10:44:54.812252508Z",
+        "voting_end_time": "2022-07-29T11:14:54.812252508Z",
+        "is_expedited": true
       },
-      "status": "PROPOSAL_STATUS_ACTIVE",
-      "final_tally_result": {
-        "yes": "120345387665416176",
-        "abstain": "168823755301555",
-        "no": "4612079958291",
-        "no_with_veto": "1212765477586"
+      {
+        "proposal_id": "158",
+        "content": {
+          "@type": "/kyve.registry.v1beta1.UnpausePoolProposal",
+          "title": "Unpause Stacks Pool",
+          "description": "With the latest @kyve/stacks runtime upgrade, we can now unpause this pool.",
+          "id": "2"
+        },
+        "status": "PROPOSAL_STATUS_PASSED",
+        "final_tally_result": {
+          "yes": "118003541262142921",
+          "abstain": "11699247079522",
+          "no": "93451693457148",
+          "no_with_veto": "0"
+        },
+        "submit_time": "2022-07-29T12:04:50.272299282Z",
+        "deposit_end_time": "2022-07-29T12:09:50.272299282Z",
+        "total_deposit": [
+          {
+            "denom": "tkyve",
+            "amount": "100000000000000"
+          }
+        ],
+        "voting_start_time": "2022-07-29T12:04:50.272299282Z",
+        "voting_end_time": "2022-07-29T12:34:50.272299282Z",
+        "is_expedited": true
       },
-      "submit_time": "2022-08-04T12:22:05.828908821Z",
-      "deposit_end_time": "2022-08-04T12:27:05.828908821Z",
-      "total_deposit": [
-        {
-          "denom": "tkyve",
-          "amount": "100000000000000"
-        }
-      ],
-      "voting_start_time": "2022-08-04T12:22:05.828908821Z",
-      "voting_end_time": "2022-08-04T12:52:05.828908821Z",
-      "is_expedited": true
+      {
+        "proposal_id": "159",
+        "content": {
+          "@type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+          "title": "Increase Undelegation Unbonding Time",
+          "description": "Increase undelegation time to 21 days.",
+          "changes": [
+            {
+              "subspace": "registry",
+              "key": "UnbondingDelegationTime",
+              "value": "\"1814400\""
+            }
+          ]
+        },
+        "status": "PROPOSAL_STATUS_PASSED",
+        "final_tally_result": {
+          "yes": "120304385926709381",
+          "abstain": "52628450705807",
+          "no": "671087326228829",
+          "no_with_veto": "78016369679223"
+        },
+        "submit_time": "2022-08-02T14:02:46.126818968Z",
+        "deposit_end_time": "2022-08-02T14:07:46.126818968Z",
+        "total_deposit": [
+          {
+            "denom": "tkyve",
+            "amount": "100000000000000"
+          }
+        ],
+        "voting_start_time": "2022-08-02T14:02:46.126818968Z",
+        "voting_end_time": "2022-08-02T14:32:46.126818968Z",
+        "is_expedited": true
+      },
+      {
+        "proposal_id": "160",
+        "content": {
+          "@type": "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal",
+          "title": "Version 0.6.4 Upgrade",
+          "description": "For a full description see: https://github.com/KYVENetwork/chain/releases/tag/v0.6.4",
+          "plan": {
+            "name": "v0.6.4",
+            "time": "0001-01-01T00:00:00Z",
+            "height": "1751913",
+            "info": "{\"binaries\": {\"linux/amd64\": \"https://github.com/KYVENetwork/chain/releases/download/v0.6.4/chain_linux_amd64.tar.gz?checksum=sha256:13cf27170532d875f17c8ad30c457eb6877454746b2f0878502b18a64d1fd866\", \"darwin/amd64\": \"https://github.com/KYVENetwork/chain/releases/download/v0.6.4/chain_darwin_amd64.tar.gz?checksum=sha256:ce79d0a417daf1ca3dc88d107b077fbf67c81efe1e87f958555a4df6ac8018db\"}}",
+            "upgraded_client_state": null
+          }
+        },
+        "status": "PROPOSAL_STATUS_PASSED",
+        "final_tally_result": {
+          "yes": "120345387665416176",
+          "abstain": "168823755301555",
+          "no": "4612079958291",
+          "no_with_veto": "1212765477586"
+        },
+        "submit_time": "2022-08-04T12:22:05.828908821Z",
+        "deposit_end_time": "2022-08-04T12:27:05.828908821Z",
+        "total_deposit": [
+          {
+            "denom": "tkyve",
+            "amount": "100000000000000"
+          }
+        ],
+        "voting_start_time": "2022-08-04T12:22:05.828908821Z",
+        "voting_end_time": "2022-08-04T12:52:05.828908821Z",
+        "is_expedited": true
+      }
+    ],
+    "pagination": {
+      "next_key": null,
+      "total": "0"
     }
-  ],
-  "pagination": {
-    "next_key": null,
-    "total": "0"
   }
-}
