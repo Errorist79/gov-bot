@@ -59,7 +59,7 @@
       "is_expedited": true
     },
     {
-      "proposal_id": "160",
+      "proposal_id": "161",
       "content": {
         "@type": "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal",
         "title": "Version 0.6.4 Upgrade",
@@ -72,7 +72,7 @@
           "upgraded_client_state": null
         }
       },
-      "status": "PROPOSAL_STATUS_PASSED",
+      "status": "PROPOSAL_STATUS_ACTIVE",
       "final_tally_result": {
         "yes": "120345387665416176",
         "abstain": "168823755301555",
