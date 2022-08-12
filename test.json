@@ -81,23 +81,23 @@
             "upgraded_client_state": null
           }
         },
-        "status": "PROPOSAL_STATUS_PASSED",
+        "status": "PROPOSAL_STATUS_VOTING_PERIOD",
         "final_tally_result": {
-          "yes": "120345387665416176",
-          "abstain": "168823755301555",
-          "no": "4612079958291",
-          "no_with_veto": "1212765477586"
+          "yes": "0",
+          "abstain": "0",
+          "no": "0",
+          "no_with_veto": "0"
         },
-        "submit_time": "2022-08-04T12:22:05.828908821Z",
-        "deposit_end_time": "2022-08-04T12:27:05.828908821Z",
+        "submit_time": "2022-08-13T12:22:05.828908821Z",
+        "deposit_end_time": "2022-08-15T12:27:05.828908821Z",
         "total_deposit": [
           {
             "denom": "tkyve",
             "amount": "100000000000000"
           }
         ],
-        "voting_start_time": "2022-08-04T12:22:05.828908821Z",
-        "voting_end_time": "2022-08-04T12:52:05.828908821Z",
+        "voting_start_time": "2022-08-13T12:22:05.828908821Z",
+        "voting_end_time": "2022-08-15T12:52:05.828908821Z",
         "is_expedited": true
       }
     ],
