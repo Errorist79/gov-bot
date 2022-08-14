@@ -21,7 +21,7 @@ client.on("messageCreate", async (message) => {
 
     async function getUser() {
       try {
-        const response = await fetch("https://api.korellia.kyve.network/cosmos/gov/v1beta1/proposals?pagination.limit=500");
+        const response = await fetch("https://api.korellia.kyve.network/cosmos/gov/v1beta1/proposals?pagination.offset=0&pagination.limit=5&pagination.countTotal=true&pagination.reverse=true");
 
         if (!response.ok) {
           throw new Error(`Error! status: ${response.status}`);
