@@ -9,7 +9,7 @@ sudo apt-get install -y nodejs
 clone the repo
 ```bash
 git clone https://github.com/Errorist79/gov-bot.git
-cd gov-bot/discord
+cd gov-bot/telegram
 ```
 install modules & start the bot
 ```bash
