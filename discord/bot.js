@@ -1,4 +1,5 @@
 const { Client, Intents, GatewayIntentBits } = require("discord.js");
+const { EmbedBuilder } = require('discord.js');
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
@@ -21,7 +22,7 @@ client.on("messageCreate", async (message) => {
 
     async function getUser() {
       try {
-        const response = await fetch("https://api.korellia.kyve.network/cosmos/gov/v1beta1/proposals?pagination.offset=0&pagination.limit=5&pagination.countTotal=true&pagination.reverse=true");
+        const response = await fetch("https://api.testnet.run/kyve.json");
 
         if (!response.ok) {
           throw new Error(`Error! status: ${response.status}`);
@@ -41,273 +42,225 @@ client.on("messageCreate", async (message) => {
             totalVote = result.proposals.length;
 
             if (Object.values(result.proposals).pop().content["@type"].indexOf("/kyve.registry.v1beta1.CreatePoolProposal") != -1) {
-              message.reply(
-                "**Proposal:** " +
-                  Object.values(result.proposals).pop().proposal_id +
-                  "\n**Title:** " +
-                  Object.values(result.proposals).pop().content.title +
-                  "\n" +
-                  "\n**Description:** " +
-                  Object.values(result.proposals).pop().content.description +
-                  "\n**Binaries:** " +
-                  Object.values(result.proposals).pop().content.binaries +
-                  "\n**Pool name:** " +
-                  Object.values(result.proposals).pop().content.name +
-                  "\n**Runtime:** " +
-                  Object.values(result.proposals).pop().content.runtime +
-                  "\n" +
-                  "\n**Submit time:** " +
-                  Object.values(result.proposals).pop().submit_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().submit_time.slice(13, 19) +
-                  "\n**Voting Time:** " +
-                  Object.values(result.proposals).pop().voting_start_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().voting_start_time.slice(13, 19) +
-                  " - " +
-                  Object.values(result.proposals).pop().voting_end_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().voting_end_time.slice(13, 19) +
-                  "\n\n **How to vote via CLI?** ```kyved tx gov vote " +
-                  Object.values(result.proposals).pop().proposal_id +
-                  " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name] ```"
-              );
+
+              try {
+                binaries_value = "linux: " + Object.values(result.proposals).pop().content.binaries.split('linux\":\"')[1].split('\"')[0] + "\nmacos: " + Object.values(result.proposals).pop().content.binaries.split('macos\":\"')[1].split('\"')[0];
+                const exampleEmbed = new EmbedBuilder()
+                  .setColor(0x027615)
+                  .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                  .setTitle(Object.values(result.proposals).pop().content.title)
+                  .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
+                  .setDescription(Object.values(result.proposals).pop().content.description)
+                  .setThumbnail('https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg')
+                  .addFields(
+                    { name: '\u200B', value: '\u200B' },
+                    { name: 'Proposal ID', value: Object.values(result.proposals).pop().proposal_id, inline: true },
+                    { name: 'Pool Name', value: Object.values(result.proposals).pop().content.name, inline: true },
+                    { name: 'Version', value: Object.values(result.proposals).pop().content.version, inline: true },
+                    { name: 'Runtime', value: Object.values(result.proposals).pop().content.runtime, inline: true },
+                  )
+                  .addFields({ name: 'Binaries', value: binaries_value })
+                  .addFields({ name: '\u200B', value: '\u200B' })
+                  .addFields({ name: 'Submit Time', value: Object.values(result.proposals).pop().submit_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().submit_time.slice(13, 19) })
+                  .addFields({ name: 'Voting Period', value: Object.values(result.proposals).pop().voting_start_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_start_time.slice(13, 19) + " - " + Object.values(result.proposals).pop().voting_end_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_end_time.slice(13, 19) })
+                  .addFields({ name: 'How to vote via CLI?', value: "```kyved tx gov vote " + Object.values(result.proposals).pop().proposal_id + " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name]```" })
+                  .setTimestamp()
+              } catch (err) {
+                const exampleEmbed = new EmbedBuilder()
+                  .setColor(0x027615)
+                  .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                  .setTitle(Object.values(result.proposals).pop().content.title)
+                  .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
+                  .setDescription(Object.values(result.proposals).pop().content.description)
+                  .setThumbnail('https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg')
+                  .addFields(
+                    { name: '\u200B', value: '\u200B' },
+                    { name: 'Proposal ID', value: Object.values(result.proposals).pop().proposal_id, inline: true },
+                    { name: 'Pool Name', value: Object.values(result.proposals).pop().content.name, inline: true },
+                    { name: 'Version', value: Object.values(result.proposals).pop().content.version, inline: true },
+                    { name: 'Runtime', value: Object.values(result.proposals).pop().content.runtime, inline: true },
+                  )
+                  .addFields({ name: '\u200B', value: '\u200B' })
+                  .addFields({ name: 'Submit Time', value: Object.values(result.proposals).pop().submit_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().submit_time.slice(13, 19) })
+                  .addFields({ name: 'Voting Period', value: Object.values(result.proposals).pop().voting_start_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_start_time.slice(13, 19) + " - " + Object.values(result.proposals).pop().voting_end_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_end_time.slice(13, 19) })
+                  .addFields({ name: 'How to vote via CLI?', value: "```kyved tx gov vote " + Object.values(result.proposals).pop().proposal_id + " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name]```" })
+                  .setTimestamp()
+              }
+
+              message.channel.send({ embeds: [exampleEmbed] });
+
             } else if (Object.values(result.proposals).pop().content["@type"].indexOf("/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal") != -1) {
-              message.reply(
-                "**Proposal:** " +
-                  Object.values(result.proposals).pop().proposal_id +
-                  "\n**Title:** " +
-                  Object.values(result.proposals).pop().content.title +
-                  "\n" +
-                  "\n**Description:** " +
-                  Object.values(result.proposals).pop().content.description +
-                  "\n**Binaries:** " +
-                  Object.values(result.proposals).pop().content.plan.info +
-                  "\n" +
-                  "\n**Submit time:** " +
-                  Object.values(result.proposals).pop().submit_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().submit_time.slice(13, 19) +
-                  "\n**Voting Time:** " +
-                  Object.values(result.proposals).pop().voting_start_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().voting_start_time.slice(13, 19) +
-                  " - " +
-                  Object.values(result.proposals).pop().voting_end_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().voting_end_time.slice(13, 19) +
-                  "\n\n **How to vote via CLI?** ```kyved tx gov vote " +
-                  Object.values(result.proposals).pop().proposal_id +
-                  " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name] ```"
-              );
+
+              const exampleEmbed = new EmbedBuilder()
+                .setColor(0x027615)
+                .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                .setTitle(Object.values(result.proposals).pop().content.title)
+                .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
+                .setDescription(Object.values(result.proposals).pop().content.description)
+                .addFields(
+                  { name: '\u200B', value: '\u200B' },
+                  { name: 'Proposal ID', value: Object.values(result.proposals).pop().proposal_id, inline: true },
+                  { name: 'Version', value: Object.values(result.proposals).pop().content.plan.name, inline: true },
+                  { name: 'Target Height', value: Object.values(result.proposals).pop().content.plan.height, inline: true },
+                )
+                .setThumbnail('https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg')
+                .addFields({ name: 'Binaries', value: Object.values(result.proposals).pop().content.plan.info.split('binaries": {"')[1].replace(/"/g, '').replace(/,/g, '\n') })
+                .addFields({ name: '\u200B', value: '\u200B' })
+                .addFields({ name: 'Submit Time', value: Object.values(result.proposals).pop().submit_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().submit_time.slice(13, 19) })
+                .addFields({ name: 'Voting Time', value: Object.values(result.proposals).pop().voting_start_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_start_time.slice(13, 19) + " - " + Object.values(result.proposals).pop().voting_end_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_end_time.slice(13, 19) })
+                .addFields({ name: 'How to vote via CLI?', value: "```kyved tx gov vote " + Object.values(result.proposals).pop().proposal_id + " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name]```" })
+                .setTimestamp()
+              message.channel.send({ embeds: [exampleEmbed] });
+
+            } else if (Object.values(result.proposals).pop().content["@type"].indexOf("/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal") != -1) {
+              const exampleEmbed = new EmbedBuilder()
+                .setColor(0x027615)
+                .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                .setTitle(Object.values(result.proposals).pop().content.title)
+                .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
+                .setDescription(Object.values(result.proposals).pop().content.description)
+                .setThumbnail('https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg')
+                .addFields({ name: 'Proposal ID', value: Object.values(result.proposals).pop().proposal_id })
+                .addFields({ name: '\u200B', value: '\u200B' })
+                .addFields({ name: 'Submit Time', value: Object.values(result.proposals).pop().submit_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().submit_time.slice(13, 19) })
+                .addFields({ name: 'Voting Time', value: Object.values(result.proposals).pop().voting_start_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_start_time.slice(13, 19) + " - " + Object.values(result.proposals).pop().voting_end_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_end_time.slice(13, 19) })
+                .addFields({ name: 'How to vote via CLI?', value: "```kyved tx gov vote " + Object.values(result.proposals).pop().proposal_id + " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name]```" })
+                .setTimestamp()
+      
+              message.reply({ embeds: [exampleEmbed] });
+              
             } else if (Object.values(result.proposals).pop().content["@type"].indexOf("/kyve.registry.v1beta1.UpdatePoolProposal") != -1) {
-              message.reply(
-                "**Proposal:** " +
-                  Object.values(result.proposals).pop().proposal_id +
-                  "\n**Title:** " +
-                  Object.values(result.proposals).pop().content.title +
-                  "\n" +
-                  "\n**Description:** " +
-                  Object.values(result.proposals).pop().content.description +
-                  "\n**Binaries:** " +
-                  Object.values(result.proposals).pop().content.binaries +
-                  +"\n" +
-                  "\n**Pool name:** " +
-                  Object.values(result.proposals).pop().content.name +
-                  "\n**Pool ID:** " +
-                  Object.values(result.proposals).pop().content.id +
-                  "\n**Runtime:** " +
-                  Object.values(result.proposals).pop().content.runtime +
-                  +"\n" +
-                  "\n**Submit time:** " +
-                  Object.values(result.proposals).pop().submit_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().submit_time.slice(13, 19) +
-                  "\n**Voting Time:** " +
-                  Object.values(result.proposals).pop().voting_start_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().voting_start_time.slice(13, 19) +
-                  " - " +
-                  Object.values(result.proposals).pop().voting_end_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().voting_end_time.slice(13, 19) +
-                  "\n\n **How to vote via CLI?** ```kyved tx gov vote " +
-                  Object.values(result.proposals).pop().proposal_id +
-                  " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name] ```"
-              );
+              const exampleEmbed = new EmbedBuilder()
+                .setColor(0x027615)
+                .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                .setTitle(Object.values(result.proposals).pop().content.title)
+                .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
+                .setDescription(Object.values(result.proposals).pop().content.description)
+                .setThumbnail('https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg')
+                .addFields(
+                  { name: '\u200B', value: '\u200B' },
+                  { name: 'Proposal ID', value: Object.values(result.proposals).pop().proposal_id, inline: true },
+                  { name: 'Pool Name', value: Object.values(result.proposals).pop().content.name, inline: true },
+                  { name: 'Pool ID', value: Object.values(result.proposals).pop().content.id, inline: true },
+                  { name: 'Runtime', value: Object.values(result.proposals).pop().content.runtime, inline: true },
+                )
+                .addFields({ name: '\u200B', value: '\u200B' })
+                .addFields({ name: 'Submit Time', value: Object.values(result.proposals).pop().submit_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().submit_time.slice(13, 19) })
+                .addFields({ name: 'Voting Time', value: Object.values(result.proposals).pop().voting_start_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_start_time.slice(13, 19) + " - " + Object.values(result.proposals).pop().voting_end_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_end_time.slice(13, 19) })
+                .addFields({ name: 'How to vote via CLI?', value: "```kyved tx gov vote " + Object.values(result.proposals).pop().proposal_id + " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name]```" })
+                .setTimestamp()
+
+              message.channel.send({ embeds: [exampleEmbed] });
+
             } else if (Object.values(result.proposals).pop().content["@type"].indexOf("/cosmos.params.v1beta1.ParameterChangeProposal") != -1) {
-              message.reply(
-                "**Proposal:** " +
-                  Object.values(result.proposals).pop().proposal_id +
-                  "\n**Title:** " +
-                  Object.values(result.proposals).pop().content.title +
-                  "\n" +
-                  "\n**Description:** " +
-                  Object.values(result.proposals).pop().content.description +
-                  "\n**Will change:** " +
-                  JSON.stringify(Object.values(result.proposals).pop().content.changes).replace(/"subspace": "registry",/g, "") +
-                  "\n" +
-                  "\n**Submit time:** " +
-                  Object.values(result.proposals).pop().submit_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().submit_time.slice(13, 19) +
-                  "\n**Voting Time:** " +
-                  Object.values(result.proposals).pop().voting_start_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().voting_start_time.slice(13, 19) +
-                  " - " +
-                  Object.values(result.proposals).pop().voting_end_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().voting_end_time.slice(13, 19) +
-                  "\n\n **How to vote via CLI?** ```kyved tx gov vote " +
-                  Object.values(result.proposals).pop().proposal_id +
-                  " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name] ```"
-              );
+              const exampleEmbed = new EmbedBuilder()
+                .setColor(0x027615)
+                .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                .setTitle(Object.values(result.proposals).pop().content.title)
+                .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
+                .setDescription(Object.values(result.proposals).pop().content.description)
+                .addFields({ name: 'Proposal ID', value: Object.values(result.proposals).pop().proposal_id })
+                .addFields({ name: 'Will change', value: JSON.stringify(Object.values(result.proposals).pop().content.changes).replace(/"subspace": "registry",/g, "") })
+                .setThumbnail('https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg')
+                .addFields({ name: '\u200B', value: '\u200B' })
+                .addFields({ name: 'Submit Time', value: Object.values(result.proposals).pop().submit_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().submit_time.slice(13, 19) })
+                .addFields({ name: 'Voting Time', value: Object.values(result.proposals).pop().voting_start_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_start_time.slice(13, 19) + " - " + Object.values(result.proposals).pop().voting_end_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_end_time.slice(13, 19) })
+                .addFields({ name: 'How to vote via CLI?', value: "```kyved tx gov vote " + Object.values(result.proposals).pop().proposal_id + " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name]```" })
+                .setTimestamp()
+
+              message.channel.send({ embeds: [exampleEmbed] });
+
             } else if (Object.values(result.proposals).pop().content["@type"].indexOf("/kyve.registry.v1beta1.PausePoolProposal") != -1) {
-              message.reply(
-                "**Proposal:** " +
-                  Object.values(result.proposals).pop().proposal_id +
-                  "\n**Title:** " +
-                  Object.values(result.proposals).pop().content.title +
-                  "\n" +
-                  "\n**Description:** " +
-                  Object.values(result.proposals).pop().content.description +
-                  "\n**Pool ID:** " +
-                  Object.values(result.proposals).pop().content.id +
-                  "\n" +
-                  "\n**Submit time:** " +
-                  Object.values(result.proposals).pop().submit_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().submit_time.slice(13, 19) +
-                  "\n**Voting Time:** " +
-                  Object.values(result.proposals).pop().voting_start_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().voting_start_time.slice(13, 19) +
-                  " - " +
-                  Object.values(result.proposals).pop().voting_end_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().voting_end_time.slice(13, 19) +
-                  "\n\n **How to vote via CLI?** ```kyved tx gov vote " +
-                  Object.values(result.proposals).pop().proposal_id +
-                  " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name] ```"
-              );
+
+              const exampleEmbed = new EmbedBuilder()
+                .setColor(0x027615)
+                .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                .setTitle(Object.values(result.proposals).pop().content.title)
+                .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
+                .setDescription(Object.values(result.proposals).pop().content.description)
+                .setThumbnail('https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg')
+                .addFields(
+                  { name: '\u200B', value: '\u200B' },
+                  { name: 'Proposal ID', value: Object.values(result.proposals).pop().proposal_id, inline: true },
+                  { name: 'Pool ID', value: Object.values(result.proposals).pop().content.id, inline: true },
+                )
+                .addFields({ name: '\u200B', value: '\u200B' })
+                .addFields({ name: 'Submit Time', value: Object.values(result.proposals).pop().submit_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().submit_time.slice(13, 19) })
+                .addFields({ name: 'Voting Time', value: Object.values(result.proposals).pop().voting_start_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_start_time.slice(13, 19) + " - " + Object.values(result.proposals).pop().voting_end_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_end_time.slice(13, 19) })
+                .addFields({ name: 'How to vote via CLI?', value: "```kyved tx gov vote " + Object.values(result.proposals).pop().proposal_id + " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name]```" })
+                .setTimestamp()
+
+              message.channel.send({ embeds: [exampleEmbed] });
+
             } else if (Object.values(result.proposals).pop().content["@type"].indexOf("/kyve.registry.v1beta1.UnpausePoolProposal") != -1) {
-              message.reply(
-                "**Proposal:** " +
-                  Object.values(result.proposals).pop().proposal_id +
-                  "\n**Title:** " +
-                  Object.values(result.proposals).pop().content.title +
-                  "\n" +
-                  "\n**Description:** " +
-                  Object.values(result.proposals).pop().content.description +
-                  "\n**Pool ID:** " +
-                  Object.values(result.proposals).pop().content.id +
-                  "\n" +
-                  "\n**Submit time:** " +
-                  Object.values(result.proposals).pop().submit_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().submit_time.slice(13, 19) +
-                  "\n**Voting Time:** " +
-                  Object.values(result.proposals).pop().voting_start_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().voting_start_time.slice(13, 19) +
-                  " - " +
-                  Object.values(result.proposals).pop().voting_end_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().voting_end_time.slice(13, 19) +
-                  "\n\n **How to vote via CLI?** ```kyved tx gov vote " +
-                  Object.values(result.proposals).pop().proposal_id +
-                  " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name] ```"
-              );
+
+              const exampleEmbed = new EmbedBuilder()
+                .setColor(0x027615)
+                .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                .setTitle(Object.values(result.proposals).pop().content.title)
+                .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
+                .setDescription(Object.values(result.proposals).pop().content.description)
+                .setThumbnail('https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg')
+                .addFields(
+                  { name: '\u200B', value: '\u200B' },
+                  { name: 'Proposal ID', value: Object.values(result.proposals).pop().proposal_id, inline: true },
+                  { name: 'Pool ID', value: Object.values(result.proposals).pop().content.id, inline: true },
+                )
+                .addFields({ name: '\u200B', value: '\u200B' })
+                .addFields({ name: 'Submit Time', value: Object.values(result.proposals).pop().submit_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().submit_time.slice(13, 19) })
+                .addFields({ name: 'Voting Time', value: Object.values(result.proposals).pop().voting_start_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_start_time.slice(13, 19) + " - " + Object.values(result.proposals).pop().voting_end_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_end_time.slice(13, 19) })
+                .addFields({ name: 'How to vote via CLI?', value: "```kyved tx gov vote " + Object.values(result.proposals).pop().proposal_id + " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name]```" })
+
+                .setTimestamp()
+
+              message.channel.send({ embeds: [exampleEmbed] });
+
             } else if (Object.values(result.proposals).pop().content["@type"].indexOf("/cosmos.gov.v1beta1.TextProposal") != -1) {
-              message.reply(
-                "**Proposal:** " +
-                  Object.values(result.proposals).pop().proposal_id +
-                  "\n**Title:** " +
-                  Object.values(result.proposals).pop().content.title +
-                  "\n" +
-                  "\n**Description:** " +
-                  Object.values(result.proposals).pop().content.description +
-                  "\n" +
-                  "\n**Submit time:** " +
-                  Object.values(result.proposals).pop().submit_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().submit_time.slice(13, 19) +
-                  "\n**Voting Time:** " +
-                  Object.values(result.proposals).pop().voting_start_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().voting_start_time.slice(13, 19) +
-                  " - " +
-                  Object.values(result.proposals).pop().voting_end_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().voting_end_time.slice(13, 19) +
-                  "\n\n **How to vote via CLI?** ```kyved tx gov vote " +
-                  Object.values(result.proposals).pop().proposal_id +
-                  " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name] ```"
-              );
+              const exampleEmbed = new EmbedBuilder()
+                .setColor(0x027615)
+                .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                .setTitle(Object.values(result.proposals).pop().content.title)
+                .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
+                .setDescription(Object.values(result.proposals).pop().content.description)
+                .setThumbnail('https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg')
+                .addFields({ name: 'Proposal ID', value: Object.values(result.proposals).pop().proposal_id })
+                .addFields({ name: '\u200B', value: '\u200B' })
+                .addFields({ name: 'Submit Time', value: Object.values(result.proposals).pop().submit_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().submit_time.slice(13, 19) })
+                .addFields({ name: 'Voting Time', value: Object.values(result.proposals).pop().voting_start_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_start_time.slice(13, 19) + " - " + Object.values(result.proposals).pop().voting_end_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_end_time.slice(13, 19) })
+                .addFields({ name: 'How to vote via CLI?', value: "```kyved tx gov vote " + Object.values(result.proposals).pop().proposal_id + " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name]```" })
+
+                .setTimestamp()
+
+              message.channel.send({ embeds: [exampleEmbed] });
+
             } else if (Object.values(result.proposals).pop().content["@type"].indexOf("/kyve.registry.v1beta1.SchedulePoolUpgradeProposal") != -1) {
-              message.reply(
-                "**Proposal:** " +
-                  Object.values(result.proposals).pop().proposal_id +
-                  "\n**Title:** " +
-                  Object.values(result.proposals).pop().content.title +
-                  "\n" +
-                  "\n**Description:** " +
-                  Object.values(result.proposals).pop().content.description +
-                  "\n**Runtime:** " +
-                  Object.values(result.proposals).pop().content.runtime +
-                  "\n**Scheduled at:** " +
-                  Object.values(result.proposals).pop().content.scheduled_at +
-                  "\n**Binaries:** " +
-                  Object.values(result.proposals).pop().content.binaries +
-                  "\n" +
-                  "\n**Submit time:** " +
-                  Object.values(result.proposals).pop().submit_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().submit_time.slice(13, 19) +
-                  "\n**Voting Time:** " +
-                  Object.values(result.proposals).pop().voting_start_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().voting_start_time.slice(13, 19) +
-                  " - " +
-                  Object.values(result.proposals).pop().voting_end_time.slice(0, 10) +
-                  ", " +
-                  (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) +
-                  Object.values(result.proposals).pop().voting_end_time.slice(13, 19) +
-                  "\n\n **How to vote via CLI?** ```kyved tx gov vote " +
-                  Object.values(result.proposals).pop().proposal_id +
-                  " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name] ```"
-              );
+              const exampleEmbed = new EmbedBuilder()
+                .setColor(0x027615)
+                .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                .setTitle(Object.values(result.proposals).pop().content.title)
+                .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
+                .setDescription(Object.values(result.proposals).pop().content.description)
+                .setThumbnail('https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg')
+                .addFields(
+                  { name: '\u200B', value: '\u200B' },
+                  { name: 'Proposal ID', value: Object.values(result.proposals).pop().proposal_id, inline: true },
+                  { name: 'Runtime', value: Object.values(result.proposals).pop().content.runtime, inline: true },
+                  { name: 'Scheduled at', value: Object.values(result.proposals).pop().content.scheduled_at, inline: true },
+                )
+                .addFields({ name: 'Binaries', value: "linux: " + Object.values(result.proposals).pop().content.binaries.split('linux\":\"')[1].split('\"')[0] + "\nmacos: " + Object.values(result.proposals).pop().content.binaries.split('macos\":\"')[1].split('\"')[0] })
+                .addFields({ name: '\u200B', value: '\u200B' })
+                .addFields({ name: 'Submit Time', value: Object.values(result.proposals).pop().submit_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().submit_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().submit_time.slice(13, 19) })
+                .addFields({ name: 'Voting Time', value: Object.values(result.proposals).pop().voting_start_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_start_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_start_time.slice(13, 19) + " - " + Object.values(result.proposals).pop().voting_end_time.slice(0, 10) + ", " + (Number(Object.values(result.proposals).pop().voting_end_time.slice(11, 13)) + 3) + Object.values(result.proposals).pop().voting_end_time.slice(13, 19) })
+                .addFields({ name: 'How to vote via CLI?', value: "```kyved tx gov vote " + Object.values(result.proposals).pop().proposal_id + " [yes/no/no_with_veto/abstain] --chain-id korellia --from [your_key_name]```" })
+
+                .setTimestamp()
+              message.channel.send({ embeds: [exampleEmbed] });
             } else {
             }
           } else {
             // message.reply("api not change");
           }
         }
-
         botActive = true;
       } catch (err) {
         console.log(err);
