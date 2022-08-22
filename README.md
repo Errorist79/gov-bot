@@ -1,2 +1,2 @@
 # gov-bot
-Kyve governance bot
+Kyve governance by TestNetRun
