@@ -47,7 +47,7 @@ client.on("messageCreate", async (message) => {
                 binaries_value = "linux: " + Object.values(result.proposals).pop().content.binaries.split('linux\":\"')[1].split('\"')[0] + "\nmacos: " + Object.values(result.proposals).pop().content.binaries.split('macos\":\"')[1].split('\"')[0];
                 const govKyve = new EmbedBuilder()
                   .setColor(0x027615)
-                  .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                  .setAuthor({ name: 'KYVE Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
                   .setTitle(Object.values(result.proposals).pop().content.title)
                   .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
                   .setDescription(Object.values(result.proposals).pop().content.description)
@@ -69,7 +69,7 @@ client.on("messageCreate", async (message) => {
               } catch (err) {
                 const govKyve = new EmbedBuilder()
                   .setColor(0x027615)
-                  .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                  .setAuthor({ name: 'KYVE Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
                   .setTitle(Object.values(result.proposals).pop().content.title)
                   .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
                   .setDescription(Object.values(result.proposals).pop().content.description)
@@ -95,7 +95,7 @@ client.on("messageCreate", async (message) => {
 
               const govKyve = new EmbedBuilder()
                 .setColor(0x027615)
-                .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                .setAuthor({ name: 'KYVE Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
                 .setTitle(Object.values(result.proposals).pop().content.title)
                 .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
                 .setDescription(Object.values(result.proposals).pop().content.description)
@@ -118,7 +118,7 @@ client.on("messageCreate", async (message) => {
             } else if (Object.values(result.proposals).pop().content["@type"].indexOf("/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal") != -1) {
               const govKyve = new EmbedBuilder()
                 .setColor(0x027615)
-                .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                .setAuthor({ name: 'KYVE Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
                 .setTitle(Object.values(result.proposals).pop().content.title)
                 .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
                 .setDescription(Object.values(result.proposals).pop().content.description)
@@ -135,7 +135,7 @@ client.on("messageCreate", async (message) => {
             } else if (Object.values(result.proposals).pop().content["@type"].indexOf("/kyve.registry.v1beta1.UpdatePoolProposal") != -1) {
               const govKyve = new EmbedBuilder()
                 .setColor(0x027615)
-                .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                .setAuthor({ name: 'KYVE Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
                 .setTitle(Object.values(result.proposals).pop().content.title)
                 .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
                 .setDescription(Object.values(result.proposals).pop().content.description)
@@ -158,7 +158,7 @@ client.on("messageCreate", async (message) => {
             } else if (Object.values(result.proposals).pop().content["@type"].indexOf("/cosmos.params.v1beta1.ParameterChangeProposal") != -1) {
               const govKyve = new EmbedBuilder()
                 .setColor(0x027615)
-                .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                .setAuthor({ name: 'KYVE Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
                 .setTitle(Object.values(result.proposals).pop().content.title)
                 .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
                 .setDescription(Object.values(result.proposals).pop().content.description)
@@ -178,7 +178,7 @@ client.on("messageCreate", async (message) => {
 
               const govKyve = new EmbedBuilder()
                 .setColor(0x027615)
-                .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                .setAuthor({ name: 'KYVE Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
                 .setTitle(Object.values(result.proposals).pop().content.title)
                 .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
                 .setDescription(Object.values(result.proposals).pop().content.description)
@@ -200,7 +200,7 @@ client.on("messageCreate", async (message) => {
 
               const govKyve = new EmbedBuilder()
                 .setColor(0x027615)
-                .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                .setAuthor({ name: 'KYVE Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
                 .setTitle(Object.values(result.proposals).pop().content.title)
                 .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
                 .setDescription(Object.values(result.proposals).pop().content.description)
@@ -222,7 +222,7 @@ client.on("messageCreate", async (message) => {
             } else if (Object.values(result.proposals).pop().content["@type"].indexOf("/cosmos.gov.v1beta1.TextProposal") != -1) {
               const govKyve = new EmbedBuilder()
                 .setColor(0x027615)
-                .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                .setAuthor({ name: 'KYVE Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
                 .setTitle(Object.values(result.proposals).pop().content.title)
                 .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
                 .setDescription(Object.values(result.proposals).pop().content.description)
@@ -241,7 +241,7 @@ client.on("messageCreate", async (message) => {
             } else if (Object.values(result.proposals).pop().content["@type"].indexOf("/kyve.registry.v1beta1.SchedulePoolUpgradeProposal") != -1) {
               const govKyve = new EmbedBuilder()
                 .setColor(0x027615)
-                .setAuthor({ name: 'Kyve Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
+                .setAuthor({ name: 'KYVE Governance', iconURL: 'https://aws1.discourse-cdn.com/standard20/uploads/kyve/original/1X/3717404dc41ed25ba3d7bdc4e244883c44edcc4f.jpeg', url: 'https://kyve.network' })
                 .setTitle(Object.values(result.proposals).pop().content.title)
                 .setURL('https://app.kyve.network/#/governance/' + Object.values(result.proposals).pop().proposal_id)
                 .setDescription(Object.values(result.proposals).pop().content.description)
